@@ -1,6 +1,6 @@
 import { USER_AUTH, USER_LOGOUT, USER_INVALID } from '../constants/action-types'
-import { API_VALIDATE } from '../constants/api-types'
-import { checkResponse } from '../helpers'
+import { API_URL } from '../constants/api-types'
+import { checkResponse } from '../helpers/network'
 import axios from 'axios'
 
 export function loginSuccess (id) {
@@ -16,14 +16,14 @@ export function loginFailure (error) {
 	return {
 		type: USER_INVALID,
 		payload: {
-			error: true
+			error
 		}
 	}
 }
 
-export const userAuth = (user, cb) => {
+export const userAuth = (user, cb, cbError) => {
 	return function(dispatch) {
-		axios.post(API_VALIDATE, {
+		axios.post(API_URL+'/validate', {
 			email: user.email,
 			password: user.password
 		})
@@ -34,11 +34,12 @@ export const userAuth = (user, cb) => {
 				dispatch(loginSuccess(data.id))
 				cb()
 			} else {
-				throw Error()
+				throw Error(message)
 			}
 		})
 		.catch(error => {
-			dispatch(loginFailure())
+			dispatch(loginFailure(error))
+			cbError()
 		})
 	}
 }

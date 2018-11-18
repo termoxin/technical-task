@@ -3,7 +3,9 @@ import { userAuth } from '../actions/userAction'
 import { connect } from 'react-redux'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
-import Notification from './Notification'
+import errors from '../constants/errors'
+import Error from '../components/Error'
+import { testEmail, testPassword } from '../helpers/inputs'
 
 class Login extends Component {
 	constructor(props) {
@@ -12,34 +14,65 @@ class Login extends Component {
 		this.state = {
 			email: '',
 			password: '',
-			fetched: false
+			fetched: false,
+			loading: false,
+			error: null
 		}
 
 		this.handleAuth = this.handleAuth.bind(this)
+		this.validate = this.validate.bind(this)
 	}
+
 	handleChange = name => event => {
 	    this.setState({
 	      [name]: event.target.value,
-	      fetched: false
 	    });
  	};
+
 	handleAuth() {
 		const { email, password } = this.state
+		const { userAuth, isAuth, error } = this.props;
 
-		this.props.userAuth({
-			email, 
-			password
-		}, () => {
+		const cbError = () => {
+			this.setState({ loading: false, fetched: true })
+		}
+		const cb = () => {
 			this.props.history.push('/profile')
-		})
+			this.setState({ loading: false, fetched: true })
+		}
 
 		this.setState({
-			fetched: true
+			loading: true
 		})
+
+		userAuth({
+			email, 
+			password
+		}, cb, cbError)
 	}
+
+	validate() {
+		const { email, password } = this.state
+
+		if(!testPassword(password)) {
+			return false
+		}
+
+		if(!testEmail(email)) {
+			return false
+		}
+		return true
+	}
+
 	render() {
+
+		const { fetched, loading } = this.state
+		const { error, isAuth } = this.props
+
 		return(
-			<div>
+			<div className="form_wrapper">
+				{ loading ? 'Loading...' : '' }
+				{ fetched ? <Error errorText={errors[error.message]} /> : ''}
 				<div className="form">
 					<TextField
 						label="Email"
@@ -57,11 +90,11 @@ class Login extends Component {
 				        color="primary" 
 				        onClick={this.handleAuth}
 				        style={{ marginTop: 15 }}
+				        disabled={!this.validate()}
 			        >
 	       				Login
 	      			</Button>
 				</div>
-				<Notification open={this.state.fetched}/>
 			</div>
 		)
 	}
@@ -69,13 +102,14 @@ class Login extends Component {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		userAuth: (user, cb) => dispatch(userAuth(user, cb))
+		userAuth: (user, cb, cbError) => dispatch(userAuth(user, cb, cbError))
 	}
 }
 
 const mapStateToProps = state => {
 	return {
-		isAuth: state.user.isAuth
+		isAuth: state.user.isAuth,
+		error: state.user.error,
 	}
 }
 
