@@ -16,7 +16,6 @@ class Login extends Component {
 			password: '',
 			fetched: false,
 			loading: false,
-			error: null
 		}
 
 		this.handleAuth = this.handleAuth.bind(this)
@@ -31,14 +30,14 @@ class Login extends Component {
 
 	handleAuth() {
 		const { email, password } = this.state
-		const { userAuth, isAuth, error } = this.props;
+		const { userAuth } = this.props;
 
 		const cbError = () => {
 			this.setState({ loading: false, fetched: true })
 		}
 		const cb = () => {
-			this.props.history.push('/profile')
 			this.setState({ loading: false, fetched: true })
+			this.props.history.push('/profile')
 		}
 
 		this.setState({
@@ -67,7 +66,7 @@ class Login extends Component {
 	render() {
 
 		const { fetched, loading } = this.state
-		const { error, isAuth } = this.props
+		const { error } = this.props
 
 		return(
 			<div className="form_wrapper">
