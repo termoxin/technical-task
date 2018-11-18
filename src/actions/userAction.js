@@ -1,4 +1,4 @@
-import { USER_AUTH, USER_LOGOUT, USER_INVALID } from '../constants/action-types'
+import { USER_AUTH, USER_LOGOUT, USER_INVALID, USER_GET } from '../constants/action-types'
 import { API_URL } from '../constants/api-types'
 import { checkResponse } from '../helpers/network'
 import axios from 'axios'
@@ -12,6 +12,7 @@ export function loginSuccess (id) {
 		}
 	}
 }
+
 export function loginFailure (error) {
 	return {
 		type: USER_INVALID,
@@ -41,6 +42,22 @@ export const userAuth = (user, cb, cbError) => {
 			dispatch(loginFailure(error))
 			cbError()
 		})
+	}
+}
+
+export const getUser = (id, cb) => {
+	return function(dispatch) {
+		axios.get(API_URL+`/user-info/${id}`)
+			.then(response => {
+				dispatch({
+					type: USER_GET,
+					payload: response.data
+				})
+				cb()
+			})
+			.catch(error => {
+				console.log(error)
+			})
 	}
 }
 

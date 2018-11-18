@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import CardItem from './Card'
+import PropTypes from 'prop-types'
+import CardItem from '../components/Card'
 import { connect } from 'react-redux'
 import Grid from '@material-ui/core/Grid';
 
@@ -26,6 +27,10 @@ const mapStateToProps = (state) => {
 	return {
 		news: state.news
 	}
+}
+
+News.propTypes = {
+	news: PropTypes.objectOf(PropTypes.array)
 }
 
 export default connect(mapStateToProps)(News)

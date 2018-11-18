@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { userAuth } from '../actions/userAction'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import errors from '../constants/errors'
@@ -33,7 +34,12 @@ class Login extends Component {
 		const { userAuth } = this.props;
 
 		const cbError = () => {
-			this.setState({ loading: false, fetched: true })
+			this.setState({ 
+				loading: false, 
+				fetched: true, 
+				email: '', 
+				password: '' 
+			})
 		}
 		const cb = () => {
 			this.setState({ loading: false, fetched: true })
@@ -77,12 +83,14 @@ class Login extends Component {
 						label="Email"
 						margin="normal"
 						onChange={this.handleChange('email')}
+						value={this.state.email}
 			        />
 			         <TextField
 						label="Password"
 						type="password"
 						margin="normal"
 						onChange={this.handleChange('password')}
+						value={this.state.password}
 			        />
 			        <Button 
 				        variant="contained" 
@@ -110,6 +118,12 @@ const mapStateToProps = state => {
 		isAuth: state.user.isAuth,
 		error: state.user.error,
 	}
+}
+
+Login.propTypes = {
+	error: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+	isAuth: PropTypes.bool,
+	userAuth: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

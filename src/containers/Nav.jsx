@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -68,6 +69,11 @@ const mapDispatchToProps = dispatch => {
 	return {
 		userLogout: () => dispatch(userLogout())
 	}
+}
+
+Nav.propTypes = {
+	isAuth: PropTypes.bool,
+	userLogout: PropTypes.func
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Nav))

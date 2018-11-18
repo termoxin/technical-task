@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
-import Login from './Login'
+import Login from '../containers/Login'
 import NotFound from './NotFound'
 import Profile from './Profile'
 import Home from './Home'
-import PrivateRoute from './PrivateRoute'
-import News from './News'
+import PrivateRoute from '../containers/PrivateRoute'
+import News from '../containers/News'
 
 class Main extends Component {
 	render() {
