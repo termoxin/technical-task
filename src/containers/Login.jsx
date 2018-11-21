@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button'
 import errors from '../constants/errors'
 import Error from '../components/Error'
 import { testEmail, testPassword } from '../helpers/inputs'
+import Loader from '../components/Loader'			
 
 class Login extends Component {
 	constructor(props) {
@@ -81,7 +82,7 @@ class Login extends Component {
 
 		return(
 			<div className="form_wrapper" onKeyUp={this.handleEnter}>
-				{ loading ? 'Loading...' : '' }
+				{ loading ? <Loader /> : '' }
 				{ fetched ? <Error errorText={errors[error.message]} /> : ''}
 				<div className="form">
 					<TextField

@@ -2,9 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import CardItem from '../components/Card'
 import { connect } from 'react-redux'
-import Grid from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid'
+import { newsGet } from '../actions/newsAction'
 
 class News extends Component {
+	componentDidMount() {
+		this.props.newsGet()
+	}
 	render() {
 		const { news } = this.props.news
 		return(
@@ -13,10 +17,11 @@ class News extends Component {
         			{
 					news.map((item, index) => (
 						<Grid item key={index} md={4}>
-							<CardItem name={item.name}/>
+							<CardItem title={item.title} text={item.text}/>
 	        			</Grid>
 					))
 					}
+					Count: {news.length}
 				</Grid>
 			</div>
 		)
@@ -29,8 +34,13 @@ const mapStateToProps = (state) => {
 	}
 }
 
+const mapDispatchToProps = (dispatch) => ({
+	newsGet: () => dispatch(newsGet())
+})
+
 News.propTypes = {
-	news: PropTypes.objectOf(PropTypes.array)
+	news: PropTypes.objectOf(PropTypes.array),
+	newsGet: PropTypes.func
 }
 
-export default connect(mapStateToProps)(News)
+export default connect(mapStateToProps, mapDispatchToProps)(News)

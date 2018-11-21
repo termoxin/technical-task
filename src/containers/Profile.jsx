@@ -8,11 +8,12 @@ import List from '@material-ui/core/List'
 import FontAwesome from '../components/FontAwesome'
 
 const icons = [
-	<FontAwesome name=""/>,
-	<FontAwesome name=""/>,
-	<FontAwesome name=""/>,
-	<FontAwesome name=""/>,
-	<FontAwesome name=""/>
+	<FontAwesome name="fas fa-globe" />,
+	<FontAwesome name="fab fa-twitch" />,
+	<FontAwesome name="fab fa-twitter"/>,
+	<FontAwesome name="fab fa-youtube"/>,
+	<FontAwesome name="fab fa-telegram"/>,
+	<FontAwesome name="fab fa-vk"/>
 ]
 
 class Profile extends Component {
@@ -44,7 +45,13 @@ class Profile extends Component {
 								<List component="nav">
 								{
 									links.map((item, index) => (
-										<ListItem button key={index} component="a" href={item.link}>
+										<ListItem 
+											button 
+											key={index} 
+											component="a" 
+											href={item.link} 
+											target="__blank">
+										  {icons[index]}
 										  <ListItemText primary={item.label} />
 										</ListItem>			
 									))

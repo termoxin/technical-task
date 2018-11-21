@@ -23,19 +23,23 @@ const styles = {
   },};
 
 const CardItem = (props) => {
-  const { classes, name } = props;
+  const { classes, title, text } = props;
 
 	return <Card className={classes.card}>
       <CardContent>
         <Typography variant="h5" component="h2">
-          {name}
+          { title }
+        </Typography>
+         <Typography component="p">
+          { text }
         </Typography>
       </CardContent>
     </Card>
 }
 
 CardItem.propTypes = {
-  name: PropTypes.string
+  title: PropTypes.string.isRequired,
+  text: PropTypes.string
 }
 
 export default withStyles(styles)(CardItem);
