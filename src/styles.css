@@ -1,3 +1,6 @@
+body {
+	font-family: 'Roboto', sans-serif;
+}
 a {
 	text-decoration: none;
 	color: white;
@@ -29,4 +32,16 @@ a {
 }
 .error span {
 	margin-left: 5px;
+}
+.info {
+	display: flex;
+	justify-content: space-around;
+}
+ul {
+	display: flex;
+	-webkit-flex-direction: column;
+	-moz-flex-direction: column;
+	-ms-flex-direction: column;
+	-o-flex-direction: column;
+	flex-direction: column;
 }

@@ -20,6 +20,7 @@ class Login extends Component {
 		}
 
 		this.handleAuth = this.handleAuth.bind(this)
+		this.handleEnter = this.handleEnter.bind(this)
 		this.validate = this.validate.bind(this)
 	}
 
@@ -28,6 +29,10 @@ class Login extends Component {
 	      [name]: event.target.value,
 	    });
  	};
+
+ 	handleEnter(e) {
+ 		if(e.keyCode === 13 && this.validate()) this.handleAuth()
+ 	}
 
 	handleAuth() {
 		const { email, password } = this.state
@@ -75,7 +80,7 @@ class Login extends Component {
 		const { error } = this.props
 
 		return(
-			<div className="form_wrapper">
+			<div className="form_wrapper" onKeyUp={this.handleEnter}>
 				{ loading ? 'Loading...' : '' }
 				{ fetched ? <Error errorText={errors[error.message]} /> : ''}
 				<div className="form">

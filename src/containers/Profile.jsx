@@ -1,6 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getUser } from '../actions/userAction'
+import SimpleList from '../components/SimpleList'
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import List from '@material-ui/core/List'
+import FontAwesome from '../components/FontAwesome'
+
+const icons = [
+	<FontAwesome name=""/>,
+	<FontAwesome name=""/>,
+	<FontAwesome name=""/>,
+	<FontAwesome name=""/>,
+	<FontAwesome name=""/>
+]
 
 class Profile extends Component {
 	constructor(props) {
@@ -20,10 +33,25 @@ class Profile extends Component {
 	}
 	render() {
 		const { status } = this.state
+		const { data, links } = this.props
 
 		const user = () => {
 			if(status === 'ok') {
-				return 'Profile'
+				return (
+					<div className="info">
+						<h1>Город: {data.data.city}</h1>
+							<SimpleList data={data.data.languages} />
+								<List component="nav">
+								{
+									links.map((item, index) => (
+										<ListItem button key={index} component="a" href={item.link}>
+										  <ListItemText primary={item.label} />
+										</ListItem>			
+									))
+								}
+								</List>
+					</div>
+				)
 			}
 			if(status === 'err') {
 				return 'Not found'
@@ -40,6 +68,8 @@ class Profile extends Component {
 		)
 	}
 }
+
+
 
 const mapStateToProps = state => {
  	return {
