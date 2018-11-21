@@ -6,6 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List'
 import FontAwesome from '../components/FontAwesome'
+import Loader from '../components/Loader'	
 
 const icons = [
 	<FontAwesome name="fas fa-globe" />,
@@ -63,7 +64,7 @@ class Profile extends Component {
 			if(status === 'err') {
 				return 'Not found'
 			}
-			return 'Loading...'
+			return <Loader />
 		}
 
 		return (

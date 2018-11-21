@@ -83,6 +83,7 @@ class Login extends Component {
 		return(
 			<div className="form_wrapper" onKeyUp={this.handleEnter}>
 				{ loading ? <Loader /> : '' }
+										
 				{ fetched ? <Error errorText={errors[error.message]} /> : ''}
 				<div className="form">
 					<TextField
